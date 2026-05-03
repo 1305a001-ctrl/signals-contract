@@ -7,8 +7,8 @@ where = ["src"]
 
 [project]
 name = "signals-contract"
-version = "0.1.0"
-description = "Shared pydantic Signal contract for the2357.com trading stack."
+version = "0.2.0"
+description = "Shared pydantic event contract for the2357.com trading stack (Signal + Alpha + Position + Fill + KillEvent + RiskMeter + SourceScore + MacroEvent + Redis Streams helpers)."
 requires-python = ">=3.11"
 dependencies = [
     "pydantic>=2.7",

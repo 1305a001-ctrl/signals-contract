@@ -4,12 +4,13 @@ Mirrors news-consolidator INTEGRATION.md. Any field-level change here is a
 contract change — bump version, tag, and update consumers' pyproject pins
 intentionally.
 """
-import json
 from datetime import datetime
-from typing import Any, Literal
+from typing import Literal
 from uuid import UUID
 
 from pydantic import BaseModel, Field, field_validator
+
+from signals_contract._helpers import _parse_json_string
 
 
 class Signal(BaseModel):
@@ -34,19 +35,6 @@ class Signal(BaseModel):
     payload: dict = Field(default_factory=dict)
     published_at: datetime
 
-    @field_validator("risk_score", "payload", mode="before")
-    @classmethod
-    def _parse_json_string(cls, v: Any) -> Any:
-        """Tolerate publishers that double-encode JSONB as strings.
-
-        Some upstream paths (e.g. ad-hoc psql republish via NOTIFY, or a
-        producer that json.dumps()'d a dict before passing to a JSONB-codec
-        column) produce a string where a dict is expected. We try once to
-        parse, fall back to passing the string through if it's not JSON.
-        """
-        if isinstance(v, str):
-            try:
-                return json.loads(v)
-            except json.JSONDecodeError:
-                return v
-        return v
+    _parse_risk_payload = field_validator(
+        "risk_score", "payload", mode="before"
+    )(_parse_json_string)
