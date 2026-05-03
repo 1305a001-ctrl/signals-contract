@@ -35,4 +35,6 @@ class Signal(BaseModel):
     payload: dict = Field(default_factory=dict)
     published_at: datetime
 
-    _parse_risk_payload = field_validator("risk_score", "payload", mode="before")(_parse_json_string)
+    _parse_risk_payload = field_validator(
+        "risk_score", "payload", mode="before"
+    )(_parse_json_string)

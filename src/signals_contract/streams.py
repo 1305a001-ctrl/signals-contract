@@ -23,7 +23,7 @@ Consumers should use BLOCK with a timeout (typically 5-30s) to avoid CPU spin.
 
 Contract version 0.2.0 (introduced 2026-05-03).
 """
-from collections.abc import AsyncIterator, Awaitable, Callable
+from collections.abc import AsyncIterator
 from typing import TypeVar
 
 from pydantic import BaseModel

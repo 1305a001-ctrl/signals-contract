@@ -14,7 +14,6 @@ service, dashboard, and pa-agent Telegram all subscribe.
 Contract version 0.2.0 (introduced 2026-05-03).
 """
 from datetime import datetime
-from typing import Literal
 from uuid import UUID
 
 from pydantic import BaseModel, Field, field_validator
